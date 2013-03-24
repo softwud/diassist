@@ -19,6 +19,7 @@
 var app = {
     initialize: function() {
         this.bind();
+        this.showAlert('title', 'message');
     },
     bind: function() {
         document.addEventListener('deviceready', this.deviceready, false);
@@ -39,4 +40,17 @@ var app = {
         var completeElem = document.querySelector('#' + id + ' .complete');
         completeElem.className = completeElem.className.split('hide').join('');
     }
+
+	showAlert:
+		function (message, title)
+		{
+			if (navigator.notification)
+			{
+				navigator.notification.alert(message, null, title, 'OK');
+			}
+			else
+			{
+				alert(title ? (title + ": " + message) : message);
+			}
+		}
 };
