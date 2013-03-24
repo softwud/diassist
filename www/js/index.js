@@ -19,7 +19,7 @@
 var app = {
     initialize: function() {
         this.bind();
-        this.showAlert('title', 'message');
+        /*this.showAlert('message', 'title');*/
     },
     bind: function() {
         document.addEventListener('deviceready', this.deviceready, false);
