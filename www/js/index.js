@@ -39,7 +39,7 @@ var app = {
 		//document.querySelector('#' + id + ' .pending').className += ' hide';
         //var completeElem = document.querySelector('#' + id + ' .complete');
         //completeElem.className = completeElem.className.split('hide').join('');
-    }
+    },
 
 	showAlert:
 		function (message, title)
