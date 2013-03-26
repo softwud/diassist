@@ -40,7 +40,7 @@ pgApp.prototype =
 	initialise:
 		function ()
 		{
-			pgApp.report('Application starting...');
+			//pgApp.report('Application starting...');
 			document.addEventListener('deviceready', this.ready, false);
 		},
 
@@ -48,7 +48,7 @@ pgApp.prototype =
 		function ()
 		{
 			pgApp.log('EVENT: deviceready');
-			pgApp.report('Application started');
+			//pgApp.report('Application started');
 		},
 };
 
