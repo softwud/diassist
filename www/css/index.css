@@ -211,6 +211,7 @@ background-color:#FFFFFF;
 	position: absolute;
 	left: 50%;
 	top: 50%;
+	margin: 100px auto;
 	width: 60px;
 	height: 60px;
 	background: url('../img/preloader.gif') transparent no-repeat top center;
@@ -220,7 +221,7 @@ background-color:#FFFFFF;
 body
 {
 /*    background-color:#E4E4E4;*/
-    background-color:#ffffff;
+    background-color: #ffffff;
 /*    background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
     background-image:-webkit-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
     background-image:-ms-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
