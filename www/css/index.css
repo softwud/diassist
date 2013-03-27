@@ -213,7 +213,7 @@ background-color:#FFFFFF;
 	top: 50%;
 	width: 60px;
 	height: 60px;
-	background: url('../img/preloader.gif') transparent no-repeat 50% 50%;
+	background: url('../img/preloader.gif') transparent no-repeat top center;
 }
 
 /*************************************************/
@@ -237,7 +237,7 @@ body
     height:100%;
     margin:0px;
     padding:0px;
-    text-transform:uppercase;
+/*    text-transform:uppercase;*/
     width:100%;
 }
 
