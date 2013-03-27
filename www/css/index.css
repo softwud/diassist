@@ -22,10 +22,195 @@
     -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
 }
+/*.bubblingG {
+text-align: center;
+width:80px;
+height:50px;
+}
 
-body {
-    background-color:#E4E4E4;
-    background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+.bubblingG span {
+display: inline-block;
+vertical-align: middle;
+width: 10px;
+height: 10px;
+margin: 25px auto;
+background: #FFFFFF;
+-webkit-border-radius: 50px;
+-webkit-animation: bubblingG 0.9s infinite alternate;
+-ms-border-radius: 50px;
+-ms-animation: bubblingG 0.9s infinite alternate;
+}
+
+#bubblingG_1 {
+-webkit-animation-delay: 0s;
+-ms-animation-delay: 0s;
+}
+
+#bubblingG_2 {
+-webkit-animation-delay: 0.27s;
+-ms-animation-delay: 0.27s;
+}
+
+#bubblingG_3 {
+-webkit-animation-delay: 0.54s;
+-ms-animation-delay: 0.54s;
+}
+
+@-webkit-keyframes bubblingG {
+0% {
+width: 10px;
+height: 10px;
+background-color:#FFFFFF;
+-webkit-transform: translateY(0);
+}
+
+100% {
+width: 24px;
+height: 24px;
+background-color:#6C99BA;
+-webkit-transform: translateY(-21px);
+}
+
+}
+
+@-ms-keyframes bubblingG {
+0% {
+width: 10px;
+height: 10px;
+background-color:#FFFFFF;
+-ms-transform: translateY(0);
+}
+
+100% {
+width: 24px;
+height: 24px;
+background-color:#6C99BA;
+-ms-transform: translateY(-21px);
+}
+
+}*/
+/*#escapingBallG
+{
+/*	position: relative;*/
+	position: absolute;
+/*	width:128px;*/
+	width: 250px;
+	height: 44px;
+}
+
+.escapingBallG
+{
+	background-color: #98B7CE;
+	position: absolute;
+/*top:0;*/
+	top: 0px;
+/*left:0;*/
+	left: 0px;
+/*	width: 44px;
+	height: 44px;*/
+	width: 24px;
+	height: 24px;
+/*	-webkit-border-radius: 22px;*/
+	-webkit-border-radius: 12px;
+	-webkit-animation-name: bounce_escapingBallG;
+	-webkit-animation-duration: 1.3s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-delay: 0s;
+	-webkit-transform: scale(0.5, 1);
+}
+
+@-webkit-keyframes bounce_escapingBallG
+{
+
+0%
+{
+	left:0px;
+	-webkit-transform:scale(0.5, 1);
+}
+
+25%
+{
+/*left:42px;*/
+	left: 125px;
+	-webkit-transform: scale(1, 0.5);
+}
+
+50%
+{
+/*left:106px;*/
+	left: 250px;
+	-webkit-transform:scale(0.5, 1);
+}
+
+75%
+{
+/*left:42px;*/
+	left: 125px;
+	-webkit-transform: scale(1, 0.5);
+}
+
+100%
+{
+/*left:0px;*/
+	left: 0px;
+	-webkit-transform: scale(0.5, 1);
+}
+
+}*/
+
+/*************************************************/
+.bubblingG {
+text-align: center;
+width:80px;
+height:50px;
+}
+
+.bubblingG span {
+display: inline-block;
+vertical-align: middle;
+width: 10px;
+height: 10px;
+margin: 25px auto;
+background: #98B7CE;
+-webkit-border-radius: 50px;
+-webkit-animation: bubblingG 1.3s infinite alternate;
+}
+
+#bubblingG_1 {
+-webkit-animation-delay: 0s;
+}
+
+#bubblingG_2 {
+-webkit-animation-delay: 0.39s;
+}
+
+#bubblingG_3 {
+-webkit-animation-delay: 0.78s;
+}
+
+@-webkit-keyframes bubblingG {
+0% {
+width: 10px;
+height: 10px;
+background-color:#98B7CE;
+-webkit-transform: translateY(0);
+}
+
+100% {
+width: 24px;
+height: 24px;
+background-color:#FFFFFF;
+-webkit-transform: translateY(-21px);
+}
+
+}
+/*************************************************/
+body
+{
+/*    background-color:#E4E4E4;*/
+    background-color:#ffffff;
+/*    background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
     background-image:-webkit-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
     background-image:-ms-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
     background-image:-webkit-gradient(
@@ -35,7 +220,7 @@ body {
         color-stop(0, #A7A7A7),
         color-stop(0.51, #E4E4E4)
     );
-    background-attachment:fixed;
+    background-attachment:fixed;*/
     font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
     font-size:12px;
     height:100%;
@@ -59,8 +244,29 @@ body {
                                    /* offset horizontal: half of text area width */
 }
 
+.bubblingG
+{
+/*    background:url(../img/logo.png) no-repeat center top;*/ /* 170px x 200px */
+	position: absolute;             /* position in the center of the screen */
+	left: 50%;
+	top: 50%;
+	height: 50px;
+	width: 80px;
+	text-align: center;
+	padding: 0px;     /* image height is 200px (bottom 20px are overlapped with text) */
+    margin: 0px;  /* offset vertical: half of image height and text area height */
+                                   /* offset horizontal: half of text area width */
+}
+
 /* Landscape layout (with min-width) */
 @media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
+    .app {
+        background-position:left center;
+        padding:75px 0px 75px 170px;  /* padding-top + padding-bottom + text area = image height */
+        margin:-90px 0px 0px -198px;  /* offset vertical: half of image height */
+                                      /* offset horizontal: half of image width and text area width */
+    }
+
     .app {
         background-position:left center;
         padding:75px 0px 75px 170px;  /* padding-top + padding-bottom + text area = image height */
