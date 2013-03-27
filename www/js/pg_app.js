@@ -1,15 +1,17 @@
-var pgApp =
-function ()
+PhoneGapApp = function ()
 {
-	pgApp.inititialise();
+	document.addEventListener('deviceready', this.ready, false);
+	this.appTitle = this.appName + this.appVer;
+	this.report('Application initialised.');
 }
 
-pgApp.prototype =
+PhoneGapApp.prototype =
 {
 	/*** Properties ***/
 	debug:	true,
 	appVer:	'0.0.1',
-	appName:	'DIassist' + pgApp.appVer,
+	appName:	'DIassist',
+	appTitle:	'',
 
 	/*** Methods ***/
 
@@ -19,6 +21,7 @@ pgApp.prototype =
 			if (pgApp.debug)
 			{
 				console.log(msg);
+				alert(msg);
 			}
 		},
 
@@ -35,28 +38,22 @@ pgApp.prototype =
 //			{
 //				alert(title + msg);
 	//	}
-			var elem = document.querySelector('#msg');
-			elem.text = msg;
-			if (elem.className.indexOf('hide') !== false)
+			var elem = $('#msg');//document.querySelector('#msg');
+//			elem.text = msg;
+			elem.text(msg);
+//			if (elem.className.indexOf('hide') !== false)
 			{
-				elem.className = elem.className.replace(hide, '');
+//				elem.className = elem.className.replace(hide, '');
 			}
 
-		},
-
-	initialise:
-		function ()
-		{
-			pgApp.report('Application starting...');
-			document.addEventListener('deviceready', this.ready, false);
 		},
 
 	ready:
 		function ()
 		{
-			pgApp.log('EVENT: deviceready');
-			pgApp.report('Application started.');
-		},
+			this.log('EVENT: deviceready');
+			this.report('Application started.');
+		}
 };
 
-var APP = new pgApp();
+var _app = new PhoneGapApp();
