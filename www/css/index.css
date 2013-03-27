@@ -205,6 +205,17 @@ background-color:#FFFFFF;
 }
 
 }
+
+.spinner
+{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 60px;
+	height: 60px;
+	background: url('../img/preloader.gif') transparent no-repeat 50% 50%;
+}
+
 /*************************************************/
 body
 {
