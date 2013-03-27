@@ -18,7 +18,7 @@ PhoneGapApp.prototype =
 	log:
 		function(msg)
 		{
-			if (pgApp.debug)
+			if (this.debug)
 			{
 				console.log(msg);
 				alert(msg);
@@ -55,5 +55,3 @@ PhoneGapApp.prototype =
 			this.report('Application started.');
 		}
 };
-
-var _app = new PhoneGapApp();

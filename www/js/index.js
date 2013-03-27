@@ -16,21 +16,21 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var app = {
+/*var app = {
     initialize: function() {
         this.bind();
     },
     bind: function() {
         document.addEventListener('deviceready', this.deviceready, false);
-    },
-    deviceready: function() {
+    },*/
+	/*    deviceready: function() {
         // This is an event handler function, which means the scope is the event.
         // So, we must explicitly called `app.report()` instead of `this.report()`.
         app.report('deviceready');
 		//this.showAlert('message', 'title');
 //		console.log('ready');
-    },
-    report: function(id) {
+    },*/
+	/*    report: function(id) {
         // Report the event in the console
         console.log("Report: " + id);
 
@@ -40,7 +40,7 @@ var app = {
 		document.querySelector('#' + id + ' .pending').className += ' hide';
         var completeElem = document.querySelector('#' + id + ' .complete');
         completeElem.className = completeElem.className.split('hide').join('');
-    },
+    },*/
 
 /*	showAlert:
 		function (message, title)
@@ -54,4 +54,4 @@ var app = {
 				alert(title ? (title + ": " + message) : message);
 			}
 		}*/
-};
+//};
