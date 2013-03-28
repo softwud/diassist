@@ -211,7 +211,7 @@ background-color:#FFFFFF;
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	margin: 100px auto;
+	/*margin: 100px auto;*/
 	width: 60px;
 	height: 60px;
 	background: url('../img/preloader.gif') transparent no-repeat top center;

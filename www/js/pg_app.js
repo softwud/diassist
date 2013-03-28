@@ -1,6 +1,9 @@
 PhoneGapApp = function ()
 {
+	$('.spinner').removeClass('hide');
 	document.addEventListener('deviceready', this.ready, false);
+	$(window).on('hashchange', $.proxy(this.route, this));
+
 	this.appTitle = this.appName + this.appVer;
 	this.report('Application initialised.');
 }
@@ -51,7 +54,23 @@ PhoneGapApp.prototype =
 	ready:
 		function ()
 		{
+			$('.spinner').fadeOut().addClass('hide');
 			this.log('EVENT: deviceready');
 			this.report('Application started.');
+		},
+
+	route:
+		function ()
+		{
+			var controller = null;
+			var action = '';
+			var id = null;
+			var hash = window.location.hash;
+			if ((hash == '') || (hash == '/'))
+			{
+			}
+			else
+			{
+			}
 		}
 };
