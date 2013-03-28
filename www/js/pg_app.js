@@ -54,7 +54,12 @@ PhoneGapApp.prototype =
 	ready:
 		function ()
 		{
-			$('.spinner').fadeOut().addClass('hide');
+			$('.spinner').fadeOut('slow',
+				function ()
+				{
+					$(this).addClass('hide');
+				}
+			);
 			this.log('EVENT: deviceready');
 			this.report('Application started.');
 		},
