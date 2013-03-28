@@ -54,7 +54,7 @@ PhoneGapApp.prototype =
 	ready:
 		function ()
 		{
-			$('.spinner').fadeOut('slow',
+			$('.spinner').fadeOut('normal',
 				function ()
 				{
 					$(this).addClass('hide');
