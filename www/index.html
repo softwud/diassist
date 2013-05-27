@@ -1,75 +1,149 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <!--<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />-->
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>DIassist</title>
-<!--        <style>
-        #msg
-        {
-			height: 1em;
-        }
-        </style>-->
-		<script type="text/javascript" src="js/handlebars.js"></script>
-		<script src="phonegap.js"></script>
-		<script src="js/jquery-1.8.2.min.js"></script>
-		<script type="text/javascript" src="js/pg_app.js"></script>
-		<script type="text/javascript" src="js/index.js"></script>
-    </head>
-	<body>
-		<!--<div id="msg" class="blink"></div>
-		<div class="bubblingG">
-			<span id="bubblingG_1"></span>
-			<span id="bubblingG_2"></span>
-			<span id="bubblingG_3"></span>
-		</div>-->
-		<!--<h1 >DIassist</h1>-->
-		<div class="spinner hide"></div>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<!--<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />-->
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<title>DIassist</title>
+		<style>
+		nav
+		{
+/*			position: absolute;
+			left: 0px;
+			bottom: 0px;*/
+			width: 100%;
+			height: 40px;
+			background-color: #000;
+		}
 
-<!--		<div id="escapingBallG">
-			<div id="escapingBall_1" class="escapingBallG"></div>
-		</div>-->
-	
-		<!--<div class="app">
-			<h1>DIassist</h1>
-            <div id="deviceready">-->
-				<!--<p class="status pending blink">Initialising...</p>
-				<p class="status complete blink hide">Device is Ready</p>
-			</div>
-		</div>-->
-		<script type="text/javascript">
-		//app.initialize();
-			var _app = null;
-			jQuery(document).ready(
-				function ()
-				{
-					_app = new PhoneGapApp();
-				});
+		nav div
+		{
+			text-align: ceter;
+			line-height: 40px;
+			float: left;
+			width: 25%;
+			background-color: red;
+		}
+		a.active
+		{
+			font-weight: bold;
+		}
+		</style>
+		<script src="phonegap.js"></script>
+		<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="js/handlebars-1.0.0-rc.3.js"></script>
+		<script type="text/javascript" src="js/ember-1.0.0-rc.1.js"></script>
+		<script type="text/javascript" src="js/ember-data.js"></script>
+<script type="text/javascript" src="js/localstorage_adapter.js"></script>
+				<script type="text/javascript" src="js/index.js"></script>
+	</head>
+	<body>
+		<div class="spinner hide"></div>
+		<!--
+		/**
+		 *  Index Template
+		 */-->
+		<script type="text/x-handlebars">
+			<header>
+				<nav>
+					<div>{{#linkTo 'settings'}}Settings{{/linkTo}}</div>
+					<div>{{#linkTo 'medications'}}Medications{{/linkTo}}</div>
+					<div>{{#linkTo 'diary'}}Diary{{/linkTo}}</div>
+					<div>{{#linkTo 'analysis'}}Analysis{{/linkTo}}</div>
+				</nav>
+			</header>
+			{{outlet}}
 		</script>
-		<!--<script type="text/javascript" src="cordova.js"></script>-->
+
+		<!--
+		/**
+		 *  Settings Template
+		 */
+		 -->
+		<script id="settings" type="text/x-handlebars">
+			<h1>Settings</h1>
+			{{outlet}}
+		</script>
+
+		<!--
+		/**
+		 *  Diary Template
+		 */
+		 -->
+		<script id="diary" type="text/x-handlebars">
+			<h1>Diary</h1>
+			<table width="100%" cellpadding="0" cell spacing="0" border="1">
+				<tr>
+					<th>When</th>
+					<th>What</th><th>Details</th><th>Notes</th>
+				</tr>
+				
+				{{#each model}}
+				<tr>
+					<td>{{date}}</td><td>{{type}}</td><td>{{fulldetails}}</td><td>{{notes}}</td>
+				</tr>
+			{{/each}}
+			</table>
+		</script>
+
+		<!--
+		/**
+		 *  Medications Template
+		 */
+		 -->
+		<script id="medications" type="text/x-handlebars">
+			<!--<h1>Medications</h1>-->
+			<button {{action 'new'}}>New</button>
+			<table width="100%" cellpadding="0" cell spacing="0" border="1">
+				{{#if editing}}
+				<tr>
+					{{partial medication-edit}}
+				</tr>
+				{{/if}}
+				<tr>
+					<th>Name</th><th>Dosage</th><th>Units</th><th>Notes</th><th></th>
+				</tr>
+				{{#each medication in content}}
+					{{partial medication-display}}
+				{{/each}}
+			</table>
+		</script>
+
+<!--		<script id="medication" type="text/x-handlebars">
+				<tr>
+					{{partial display}}
+				</tr>
+		</script>-->
+
+		<script id="medication-display" type="text/x-handlebars">
+				<tr>
+					<td>{{medication.name}}</td>
+					<td>{{medication.dosage}}</td>
+					<td>{{medication.units}}</td>
+					<td>{{medication.notes}}</td>
+					<td><button {{action edit medication}}>Edit</button><button {{action delete medication}}>Delete</button></td>
+				</tr>
+		</script>
+
+		<script id="medication-edit" type="text/x-handlebars">
+				<tr>
+					<td>{{view Ember.TextField valueBinding='editing.name'}}</td>
+					<td>{{view Ember.TextField valueBinding='editing.dosage'}}</td>
+					<td>{{view Ember.TextField valueBinding='editing.units'}}</td>
+					<td>{{view Ember.TextArea valueBinding='editing.notes'}}</td>
+					<td><button {{action doneEditing editing}}>Done</button></td>
+				</tr>
+		</script>
+
+		<!--
+		/**
+		 *  Analysis Template
+		 */
+		 -->
+		<script id="analysis" type="text/x-handlebars">
+			<h1>Analysis</h1>
+			{{outlet}}
+		</script>
 	</body>
 </html>
-
-<style>
-
-</style>
