@@ -93,7 +93,7 @@
 		 */
 		 -->
 		<script id="medications" type="text/x-handlebars">
-			<!--<h1>Medications</h1>-->
+			<h1>Medications</h1>
 			<button {{action 'new'}}>New</button>
 			<table width="100%" cellpadding="0" cell spacing="0" border="1">
 				{{#if editing}}
@@ -110,13 +110,7 @@
 			</table>
 		</script>
 
-<!--		<script id="medication" type="text/x-handlebars">
-				<tr>
-					{{partial display}}
-				</tr>
-		</script>-->
-
-		<script id="medication-display" type="text/x-handlebars">
+		<script id="_medication-display" type="text/x-handlebars">
 				<tr>
 					<td>{{medication.name}}</td>
 					<td>{{medication.dosage}}</td>
@@ -126,13 +120,20 @@
 				</tr>
 		</script>
 
-		<script id="medication-edit" type="text/x-handlebars">
+		<script id="_medication-edit" type="text/x-handlebars">
 				<tr>
-					<td>{{view Ember.TextField valueBinding='editing.name'}}</td>
-					<td>{{view Ember.TextField valueBinding='editing.dosage'}}</td>
-					<td>{{view Ember.TextField valueBinding='editing.units'}}</td>
-					<td>{{view Ember.TextArea valueBinding='editing.notes'}}</td>
-					<td><button {{action doneEditing editing}}>Done</button></td>
+					<td colspan="5">
+						{{view Ember.TextField valueBinding='editing.name'}}
+						{{view Ember.TextField valueBinding='editing.dosage'}}
+						{{view Ember.Select
+							contentBinding="App.MedicationUnits"
+							optionValuePath="content.name"
+							optionLabelPath="content.name"
+							valueBinding='editing.units'
+							selected=null
+							prompt="- Please Select -"}}
+						{{view Ember.TextArea valueBinding='editing.notes'}}
+						<button {{action doneEditing editing}}>Done</button></td>
 				</tr>
 		</script>
 

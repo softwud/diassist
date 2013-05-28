@@ -1,0 +1,1 @@
+/* dummy phonegap.js file */

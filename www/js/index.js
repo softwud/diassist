@@ -1,7 +1,16 @@
+var App = null;
+var reset = false;
+
 $(document).ready(
 	function ()
 	{
-		var App = Ember.Application.create();
+		if (reset)
+		{
+			localStorage.removeItem('DIAssist');
+			localStorage.setItem('DIAssist', '{"App.Unit":{"records":{}},"App.Medication":{"records":{}}}');
+		}
+
+		App = Ember.Application.create();
 		App.store = DS.Store.create({
 			revision: 11,
 			adapter: DS.LSAdapter.create({namespace: 'DIAssist' })
@@ -19,7 +28,7 @@ $(document).ready(
 		App.Router.map(
 				function ()
 				{
-					this.resource('settings', { path: '/settings' });
+					this.resource('settings', { path: '/settings'});
 					this.resource('diary', { path: '/diary' });
 					this.resource('analysis', { path: '/analysis' });
 
@@ -72,24 +81,27 @@ $(document).ready(
 
 		/* * * * * Models */
 
+		App.Unit = DS.Model.extend({
+			name:			DS.attr('string'),
+			description:	DS.attr('string'),
+			created:		DS.attr('date'),
+			modified:		DS.attr('date'),
+		});
+
 		/**
 		 *	Medication
 		 */
 		App.Medication = DS.Model.extend({
-				name:			DS.attr('string'),
-				dosage:			DS.attr('number'),
-				units:			DS.attr('string'),
-				notes:			DS.attr('string'),
-				created:		DS.attr('date'),
-				modified:		DS.attr('date'),
-				hasName:
-					function()
-					{
-						var value = this.get('name');
-						return ((typeof value == 'string') && (value != ''));
-					}.property('name')
+			name:			DS.attr('string'),
+			dosage:			DS.attr('number'),
+			units:			DS.attr('string'),
+			notes:			DS.attr('string'),
+			created:		DS.attr('date'),
+			modified:		DS.attr('date'),
 		});
 
+		App.MedicationUnits = App.Unit.find();
+//			[ '', 'IU', 'mg', 'tablets' ];
 		/**
 		 *	DiaryEntry
 		 */
@@ -150,9 +162,9 @@ $(document).ready(
 			new:
 				function ()
 				{
-//					var transaction = App.store.transaction();
-//					var medication = transaction.createRecord(App.Medication,
-					var medication = App.store.createRecord(App.Medication,
+					var transaction = App.store.transaction();
+					var medication = transaction.createRecord(App.Medication,
+//					var medication = App.Medication.createRecord(
 					{
 						name:		'',
 						dosage:		0.0,
@@ -161,10 +173,11 @@ $(document).ready(
 						created:	new Date(),
 						modified:	new Date()
 					});
+//					medication.get("transaction").commit();
+					transaction.commit();
 					this.set('editing', medication);
 //					transaction.add(medication);
 //					transaction.commit();
-					medication.store.commit();
 //					medication.set('isEditing', true);
 					// Don't commit since we want to just display
 					// the empty new model so the user can still cancel it
@@ -211,23 +224,51 @@ $(document).ready(
 				}
 		});
 
-		var reset = false;
-		if (reset)
-		{
-//			localStorage.removeItem('DIAssist');
-		}
 		var testData =
 		[
-		{
-			model:			App.Medication,
-			name:			'Humalog',
-			dosage:			12.0,
-			units:			'UI',
-			notes:			'Adter each meal',
-			created:		new Date(),
-			modified:		new Date()
-		},
-		{
+/*			{
+				model:			App.Medication,
+				name:			'Humalog',
+				dosage:			12.0,
+				units:			'',
+				notes:			'After each meal',
+				created:		new Date(),
+				modified:		new Date()
+			},*/
+
+			{
+				model:			App.Unit,
+				name:			'IU',
+				description:	'International Units',
+				created:		new Date(),
+				modified:		new Date()
+			},
+
+			{
+				model:			App.Unit,
+				name:			'IU / portion',
+				description:	'International Units per charbohydrate exchange portion',
+				created:		new Date(),
+				modified:		new Date()
+			},
+
+			{
+				model:			App.Unit,
+				name:			'mg',
+				description:	'milligrams',
+				created:		new Date(),
+				modified:		new Date()
+			},
+
+			{
+				model:			App.Unit,
+				name:			'tablets',
+				description:	'number of whole tablets',
+				created:		new Date(),
+				modified:		new Date()
+			},
+
+/*		{
 			model:			App.DiaryEntry,
 			date:			new Date(),
 			type:			'bsl',
@@ -249,20 +290,27 @@ $(document).ready(
 			notes:		'A dosage of insulin',
 			created:	new Date(),
 			modified:	new Date()
-		}
+		}*/
 		];
 
 		if (reset)
 		{
-			var transaction = App.store.transaction();
+//			localStorage.removeItem('DIAssist');
+//			localStorage.setItem('DIAssist', '"{"App.Unit":{"records":{}},"App.Medication":{"records":{}}}"');
+//			var store = this.get("store");
+//			var transaction = store.transaction();
+			var transaction = App.get("store").transaction();
+
 			for (var i = 0 ; i < testData.length ; i++)
 			{
 				var data = testData[i];
 				var model = testData[i].model;
 				delete data.model;
 				var entry = transaction.createRecord(model, data);
-				transaction.add(entry);
+				entry.get('transaction').commit();
+//				transaction.add(entry);
+//				App.store.commit();
 			}
-			transaction.commit();
+//			transaction.commit();
 		}
 	});
