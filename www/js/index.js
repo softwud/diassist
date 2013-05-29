@@ -29,7 +29,7 @@ $(document).ready(
 				function ()
 				{
 					this.resource('settings', { path: '/settings'});
-					this.resource('diary', { path: '/diary' });
+					this.resource('diaryentries', { path: '/diaryentries' });
 					this.resource('analysis', { path: '/analysis' });
 
 
@@ -44,11 +44,19 @@ $(document).ready(
 
 		/* * * * * Routes */
 
-		App.DiaryRoute = Ember.Route.extend({
+		App.IndexRoute = Ember.Route.extend({
+			redirect:
+				function ()
+				{
+					this.transitionTo('diaryentries');
+				}
+		});
+
+		App.DiaryentriesRoute = Ember.Route.extend({
 			model:
 				function()
 				{
-					return App.DiaryEntry.all();
+					return App.DiaryEntry.find();
 				}
 		});
 
@@ -220,6 +228,70 @@ $(document).ready(
 				{
 //					var transaction = medication.transaction;
 					medication.deleteRecord();
+					App.store.commit();
+				}
+		});
+
+		/**
+		 *	DiaryEntries Controller
+		 */
+		 /* This should be called App.DiaryEntriesController but
+		 Ember is too stupid so it needs the lower case 'e' version
+		 instead */
+		App.DiaryentriesController = Ember.ArrayController.extend({
+			editing: null,
+
+			new:
+				function ()
+				{
+					var transaction = App.store.transaction();
+					var diaryentry = transaction.createRecord(App.DiaryEntry,
+					{
+						date:			new Date(),
+						type:			'bsl',	/* valid values - medication, meal, hypo, bsl */
+
+						/* medication e.g. insulin */
+						medId:			0,
+						dosage:			0,
+						units:			'',
+
+						/* meal */
+						image:			'',
+						portions:		0,
+
+						/* hypoglycaemic episode */
+						treatmentId:	DS.attr('number'),
+
+						/* Blood sugar reading */
+						reading:		0,
+
+						notes:			'',
+						created:		new Date(),
+						modified:		new Date(),
+					});
+
+					transaction.commit();
+					this.set('editing', diaryentry);
+				},
+
+			edit:
+				function (diaryentry)
+				{
+					this.set('editing', diaryentry);
+				},
+
+			doneEditing:
+				function (diaryentry)
+				{
+					diaryentry.store.commit();
+					this.set('editing', null);
+				},
+
+			delete:
+				function (diaryentry)
+				{
+//					var transaction = medication.transaction;
+					diaryentry.deleteRecord();
 					App.store.commit();
 				}
 		});

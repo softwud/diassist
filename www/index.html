@@ -7,36 +7,45 @@
 		<link rel="stylesheet" type="text/css" href="css/index.css" />
 		<title>DIassist</title>
 		<style>
+		header
+		{
+			width: 100%;
+/*			height: 100%;*/
+/*			position: relative;*/
+		}
+
 		nav
 		{
 /*			position: absolute;
-			left: 0px;
-			bottom: 0px;*/
+			right: 0px;
+			top: 0px;*/
 			width: 100%;
 			height: 40px;
-			background-color: #000;
+			background-color: #f00;
+/*			margin-left: calc(100% - 40px);*/
 		}
 
 		nav div
 		{
-			text-align: ceter;
+			text-align: center;
 			line-height: 40px;
 			float: left;
 			width: 25%;
 			background-color: red;
+/*			transform: rotate(90deg);*/
 		}
 		a.active
 		{
 			font-weight: bold;
 		}
 		</style>
-		<script src="phonegap.js"></script>
+		<script type="text/javascript" src="phonegap.js"></script>
 		<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 		<script type="text/javascript" src="js/handlebars-1.0.0-rc.3.js"></script>
 		<script type="text/javascript" src="js/ember-1.0.0-rc.1.js"></script>
 		<script type="text/javascript" src="js/ember-data.js"></script>
-<script type="text/javascript" src="js/localstorage_adapter.js"></script>
-				<script type="text/javascript" src="js/index.js"></script>
+		<script type="text/javascript" src="js/localstorage_adapter.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
 	</head>
 	<body>
 		<div class="spinner hide"></div>
@@ -47,10 +56,10 @@
 		<script type="text/x-handlebars">
 			<header>
 				<nav>
-					<div>{{#linkTo 'settings'}}Settings{{/linkTo}}</div>
+					<div>{{#linkTo 'diaryentries'}}Diary{{/linkTo}}</div>
 					<div>{{#linkTo 'medications'}}Medications{{/linkTo}}</div>
-					<div>{{#linkTo 'diary'}}Diary{{/linkTo}}</div>
 					<div>{{#linkTo 'analysis'}}Analysis{{/linkTo}}</div>
+					<div>{{#linkTo 'settings'}}Settings{{/linkTo}}</div>
 				</nav>
 			</header>
 			{{outlet}}
@@ -71,20 +80,46 @@
 		 *  Diary Template
 		 */
 		 -->
-		<script id="diary" type="text/x-handlebars">
-			<h1>Diary</h1>
+		<script id="diaryentries" type="text/x-handlebars">
+			<button {{action new}}>New Entry</button>
 			<table width="100%" cellpadding="0" cell spacing="0" border="1">
+				{{#if editing}}
+					{{partial diaryentry-edit}}
+				{{/if}}
 				<tr>
-					<th>When</th>
-					<th>What</th><th>Details</th><th>Notes</th>
+					<th>When</th><th>What</th><th>Details</th><th>Notes</th>
 				</tr>
-				
-				{{#each model}}
-				<tr>
-					<td>{{date}}</td><td>{{type}}</td><td>{{fulldetails}}</td><td>{{notes}}</td>
-				</tr>
-			{{/each}}
+				{{#each diaryentry in content}}
+					{{partial diaryentry-display}}
+				{{/each}}
 			</table>
+		</script>
+
+		<script id="_diaryentry-display" type="text/x-handlebars">
+				<tr>
+					<td>{{diaryentry.date}}</td>
+					<td>{{diaryentry.type}}</td>
+					<td>{{diaryentry.fulldetails}}</td>
+					<td>{{diaryentry.notes}}</td>
+					<td><button {{action edit diaryentry}}>Edit</button><button {{action delete diaryentry}}>Delete</button></td>
+				</tr>
+		</script>
+
+		<script id="_diaryentry-edit" type="text/x-handlebars">
+				<tr>
+					<td colspan="5">
+						{{view Ember.TextField valueBinding='editing.date'}}
+						{{view Ember.TextField valueBinding='editing.type'}}
+						{{view Ember.Select
+							contentBinding="App.MedicationUnits"
+							optionValuePath="content.name"
+							optionLabelPath="content.name"
+							valueBinding='editing.units'
+							selected=null
+							prompt="- Please Select -"}}
+						{{view Ember.TextArea valueBinding='editing.notes'}}
+						<button {{action doneEditing editing}}>Done</button></td>
+				</tr>
 		</script>
 
 		<!--
@@ -93,7 +128,6 @@
 		 */
 		 -->
 		<script id="medications" type="text/x-handlebars">
-			<h1>Medications</h1>
 			<button {{action 'new'}}>New</button>
 			<table width="100%" cellpadding="0" cell spacing="0" border="1">
 				{{#if editing}}
